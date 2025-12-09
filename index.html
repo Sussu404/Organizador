@@ -23,20 +23,17 @@
       --border-color: #C06C84;
       --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-
     body {
       font-family: var(--font-family);
       background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-accent) 100%);
       min-height: 100vh;
       color: var(--text-primary);
     }
-
     .auth-container {
       display: flex;
       align-items: center;
@@ -46,7 +43,6 @@
       position: relative;
       overflow: hidden;
     }
-
     .auth-container::before,
     .auth-container::after {
       content: '';
@@ -54,7 +50,6 @@
       border-radius: 50%;
       background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
     }
-
     .auth-container::before {
       width: 500px;
       height: 500px;
@@ -62,7 +57,6 @@
       left: -200px;
       animation: float 6s ease-in-out infinite;
     }
-
     .auth-container::after {
       width: 400px;
       height: 400px;
@@ -71,12 +65,10 @@
       animation: float 8s ease-in-out infinite reverse;
       opacity: 0.8;
     }
-
     @keyframes float {
       0%, 100% { transform: translateY(0) translateX(0); }
       50% { transform: translateY(-20px) translateX(20px); }
     }
-
     .auth-box {
       background: rgba(230, 230, 230, 0.95);
       backdrop-filter: blur(20px);
@@ -90,19 +82,16 @@
       border: 1px solid rgba(192, 108, 132, 0.5);
       text-align: center;
     }
-
     .auth-logo {
       font-size: 4rem;
       margin-bottom: 1rem;
       animation: bounce 2s infinite;
       display: inline-block;
     }
-
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
     }
-
     .auth-title {
       font-size: 2rem;
       background: linear-gradient(135deg, var(--btn-primary), #C06C84);
@@ -113,19 +102,16 @@
       font-weight: 800;
       letter-spacing: -0.5px;
     }
-
     .auth-subtitle {
       color: #6b7280;
       margin: 0;
       font-size: 1rem;
       font-weight: 500;
     }
-
     .input-group {
       margin-bottom: 1.25rem;
       text-align: left;
     }
-
     .input-group label {
       display: block;
       font-weight: 600;
@@ -133,7 +119,6 @@
       margin-bottom: 0.5rem;
       font-size: 0.9rem;
     }
-
     .input-group input,
     .input-group select {
       width: 100%;
@@ -144,7 +129,6 @@
       background: white;
       transition: all 0.3s ease;
     }
-
     .input-group input:focus,
     .input-group select:focus {
       outline: none;
@@ -152,7 +136,6 @@
       box-shadow: 0 0 0 3px rgba(108, 91, 123, 0.2);
       transform: translateY(-1px);
     }
-
     .btn {
       padding: 0.75rem 1.5rem;
       border: none;
@@ -165,26 +148,22 @@
       align-items: center;
       gap: 0.5rem;
     }
-
     .btn-primary {
       background: linear-gradient(135deg, var(--btn-primary), var(--btn-primary-hover));
       color: var(--surface);
       box-shadow: 0 4px 12px rgba(108, 91, 123, 0.3);
       width: 100%;
     }
-
     .btn-primary:hover {
       background: linear-gradient(135deg, var(--btn-primary-hover), #AA99BB);
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(108, 91, 123, 0.5);
     }
-
     .main-wrapper {
       display: none;
       min-height: 100vh;
       padding: 2rem 1rem;
     }
-
     header {
       background: var(--surface);
       padding: 2rem;
@@ -193,7 +172,6 @@
       margin-bottom: 2rem;
       text-align: center;
     }
-
     h1 {
       background: linear-gradient(135deg, var(--btn-primary), #C06C84);
       -webkit-background-clip: text;
@@ -203,13 +181,11 @@
       font-size: 2rem;
       font-weight: 700;
     }
-
     .subtitle {
       color: var(--text-muted);
       margin: 0;
       font-size: 1rem;
     }
-
     .action-bar {
       background: var(--surface);
       padding: 1.5rem;
@@ -221,7 +197,6 @@
       flex-wrap: wrap;
       align-items: center;
     }
-
     .user-info {
       display: flex;
       align-items: center;
@@ -231,7 +206,6 @@
       border-radius: 8px;
       margin-left: auto;
     }
-
     .user-avatar {
       width: 40px;
       height: 40px;
@@ -245,7 +219,6 @@
       font-size: 1.1rem;
       box-shadow: 0 4px 8px rgba(108, 91, 123, 0.4);
     }
-
     .btn-logout {
       background: var(--danger);
       color: white;
@@ -257,37 +230,31 @@
       cursor: pointer;
       transition: background 0.3s ease;
     }
-
     .btn-logout:hover {
       background: #dc2626;
     }
-
     .content-area {
       background: var(--surface);
       padding: 2rem;
       border-radius: 12px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     }
-
     .form-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 1.25rem;
       margin-bottom: 1.5rem;
     }
-
     .form-group {
       display: flex;
       flex-direction: column;
     }
-
     label {
       font-weight: 600;
       color: #334155;
       margin-bottom: 0.5rem;
       font-size: 0.9rem;
     }
-
     input, select, textarea {
       padding: 0.75rem;
       border: 2px solid var(--border-color);
@@ -295,38 +262,31 @@
       font-size: 0.95rem;
       background: white;
     }
-
     input:focus, select:focus, textarea:focus {
       outline: none;
       border-color: var(--btn-primary);
     }
-
     textarea {
       min-height: 100px;
       resize: vertical;
     }
-
     .full-width {
       grid-column: 1 / -1;
     }
-
     .empty-state {
       text-align: center;
       padding: 3rem 1rem;
       color: #94a3b8;
     }
-
     .empty-state-icon {
       font-size: 3rem;
       margin-bottom: 1rem;
     }
-
     .planificaciones-list,
     .planner-grid {
       display: grid;
       gap: 1.25rem;
     }
-
     .planificacion-card,
     .activity-card {
       background: linear-gradient(135deg, var(--surface) 0%, #D6D6D6 100%);
@@ -335,19 +295,16 @@
       padding: 1.5rem;
       transition: all 0.3s ease;
     }
-
     .planificacion-card:hover,
     .activity-card:hover {
       border-color: var(--btn-primary);
       box-shadow: 0 8px 20px rgba(108, 91, 123, 0.4);
       transform: translateY(-2px);
     }
-
     .activity-card.completed {
       opacity: 0.7;
       background: #f1f5f9;
     }
-
     .card-header,
     .activity-header {
       display: flex;
@@ -356,7 +313,6 @@
       margin-bottom: 1rem;
       gap: 1rem;
     }
-
     .card-title,
     .activity-title {
       font-size: 1.15rem;
@@ -364,34 +320,28 @@
       color: var(--text-primary);
       margin: 0 0 0.25rem 0;
     }
-
     .card-subtitle,
     .activity-meta {
       font-size: 0.9rem;
       color: var(--text-muted);
       margin: 0;
     }
-
     .card-actions,
     .activity-actions {
       display: flex;
       gap: 0.5rem;
     }
-
     .btn-small {
       padding: 0.5rem 1rem;
       font-size: 0.85rem;
     }
-
     .btn-danger {
       background: var(--danger);
       color: white;
     }
-
     .btn-danger:hover {
       background: #dc2626;
     }
-
     .priority-badge {
       padding: 0.25rem 0.75rem;
       border-radius: 12px;
@@ -399,11 +349,9 @@
       font-weight: 700;
       text-transform: uppercase;
     }
-
     .priority-alta { background: #fee2e2; color: #991b1b; }
     .priority-media { background: #fef3c7; color: #92400e; }
     .priority-baja { background: #dbeafe; color: #1e40af; }
-
     .btn-complete {
       background: linear-gradient(135deg, #C7C7FF 0%, #A7A7E6 100%);
       color: #2c3e50;
@@ -416,18 +364,15 @@
       transition: all 0.3s ease;
       box-shadow: 0 2px 6px rgba(199, 199, 255, 0.2);
     }
-
     .btn-complete.completed {
       background: #94a3b8;
     }
-
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1rem;
       margin-bottom: 2rem;
     }
-
     .stat-card {
       background: white;
       padding: 1.5rem;
@@ -436,7 +381,6 @@
       text-align: center;
       transition: all 0.3s ease;
     }
-
     .stat-number {
       font-size: 2rem;
       font-weight: 700;
@@ -446,13 +390,11 @@
       background-clip: text;
       margin: 0;
     }
-
     .stat-label {
       color: var(--text-muted);
       font-size: 0.85rem;
       margin: 0.5rem 0 0 0;
     }
-
     #pdf-preview {
       display: none;
       position: fixed;
@@ -465,7 +407,6 @@
       padding: 2rem;
       overflow: auto;
     }
-
     .pdf-document {
       max-width: 800px;
       margin: 0 auto;
@@ -473,31 +414,26 @@
       padding: 3rem;
       box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
     }
-
     .pdf-header {
       text-align: center;
       border-bottom: 3px solid #667eea;
       padding-bottom: 1.5rem;
       margin-bottom: 2rem;
     }
-
     .pdf-institution {
       font-size: 1.5rem;
       font-weight: 700;
       color: var(--text-primary);
       margin: 0 0 0.5rem 0;
     }
-
     .pdf-title {
       font-size: 1.2rem;
       color: #667eea;
       margin: 0;
     }
-
     .pdf-section {
       margin-bottom: 1.5rem;
     }
-
     .pdf-section-title {
       font-size: 1rem;
       font-weight: 700;
@@ -506,33 +442,27 @@
       padding-bottom: 0.5rem;
       border-bottom: 2px solid #e2e8f0;
     }
-
     .pdf-info-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 1rem;
     }
-
     .pdf-info-item {
       display: flex;
       gap: 0.5rem;
     }
-
     .pdf-label {
       font-weight: 600;
       color: #475569;
     }
-
     .pdf-value {
       color: var(--text-muted);
     }
-
     .pdf-text-block {
       color: #475569;
       line-height: 1.6;
       white-space: pre-wrap;
     }
-
     .pdf-footer {
       margin-top: 3rem;
       padding-top: 1.5rem;
@@ -541,7 +471,6 @@
       color: #94a3b8;
       font-size: 0.85rem;
     }
-
     .close-pdf {
       position: fixed;
       top: 1rem;
@@ -554,7 +483,6 @@
       border-radius: 6px;
       cursor: pointer;
     }
-
     .toast {
       position: fixed;
       bottom: 2rem;
@@ -571,16 +499,13 @@
       animation: slideIn 0.3s ease;
       font-weight: 600;
     }
-
     .toast.active {
       display: flex;
     }
-
     @keyframes slideIn {
       from { transform: translateX(400px); opacity: 0; }
       to { transform: translateX(0); opacity: 1; }
     }
-
     @media (max-width: 768px) {
       .form-grid { grid-template-columns: 1fr; }
       .action-bar { flex-direction: column; }
@@ -590,7 +515,6 @@
 </head>
 <body>
 <script src="//code.tidio.co/fohmaxvw9lsqsusdmwqicxphpknivgm3.js" async></script>
-
   <!-- Login Screen -->
   <div id="auth-screen" class="auth-container">
     <div class="auth-box">
@@ -607,14 +531,21 @@
           <select id="auth-usertype" required>
             <option value="">Seleccionar...</option>
             <option value="estudiante">Estudiante</option>
-            <option value="profesor">Profesor</option>
+            <option value="profesor">Docente</option>
+          </select>
+        </div>
+        <div class="input-group" id="bachillerato-field" style="display: none;">
+          <label for="auth-bachillerato">Modalidad de Bachillerato</label>
+          <select id="auth-bachillerato">
+            <option value="">Seleccionar...</option>
+            <option value="ciencias">Bachillerato en Ciencias</option>
+            <option value="tecnico">Bachillerato Técnico</option>
           </select>
         </div>
         <button type="submit" class="btn btn-primary">Ingresar</button>
       </form>
     </div>
   </div>
-
   <!-- Teacher Dashboard -->
   <div id="teacher-dashboard" class="main-wrapper">
     <div class="main-container">
@@ -625,10 +556,10 @@
       <div class="action-bar">
         <button class="btn btn-primary" id="btn-nueva-planificacion">➕ Nueva Planificación</button>
         <div class="user-info">
-          <div class="user-avatar" id="user-avatar">P</div>
+          <div class="user-avatar" id="user-avatar">D</div>
           <div>
-            <div class="user-name" id="user-name">Profesor</div>
-            <div class="user-role">Profesor</div>
+            <div class="user-name" id="user-name">Docente</div>
+            <div class="user-role">Docente</div>
           </div>
           <button class="btn-logout" id="btn-logout-teacher">Cerrar Sesión</button>
         </div>
@@ -671,7 +602,7 @@
                 <input type="text" id="curso" placeholder="Ej: 3° A" required />
               </div>
               <div class="form-group">
-                <label for="periodo">Período *</label>
+                <label for="periodo">Período Lectivo *</label>
                 <input type="text" id="periodo" placeholder="Ej: 1er Trimestre 2024" required />
               </div>
               <div class="form-group">
@@ -716,7 +647,6 @@
       </main>
     </div>
   </div>
-
   <!-- Student Dashboard -->
   <div id="student-dashboard" class="main-wrapper">
     <div class="main-container">
@@ -751,7 +681,18 @@
       <div class="action-bar">
         <button class="btn btn-primary" id="btn-nueva-actividad">➕ Nueva Actividad</button>
         <div class="filter-section">
-          <label for="filter-categoria" style="margin: 0;">Filtrar:</label>
+          <label for="filter-materia" style="margin: 0;">Materia:</label>
+          <select id="filter-materia" class="filter-select">
+            <option value="todas">Todas las materias</option>
+          </select>
+          <label for="filter-trimestre" style="margin: 0;">Trimestre:</label>
+          <select id="filter-trimestre" class="filter-select">
+            <option value="todos">Todos los trimestres</option>
+            <option value="1er Trimestre">1er Trimestre</option>
+            <option value="2do Trimestre">2do Trimestre</option>
+            <option value="3er Trimestre">3er Trimestre</option>
+          </select>
+          <label for="filter-categoria" style="margin: 0;">Categoría:</label>
           <select id="filter-categoria" class="filter-select">
             <option value="todos">Todas las categorías</option>
             <option value="tarea">Tareas</option>
@@ -760,6 +701,7 @@
             <option value="lectura">Lecturas</option>
             <option value="otro">Otros</option>
           </select>
+          <label for="filter-estado" style="margin: 0;">Estado:</label>
           <select id="filter-estado" class="filter-select">
             <option value="todos">Todos los estados</option>
             <option value="pendiente">Pendiente</option>
@@ -789,7 +731,18 @@
               </div>
               <div class="form-group">
                 <label for="actividad-materia">Materia *</label>
-                <input type="text" id="actividad-materia" placeholder="Ej: Historia" required />
+                <select id="actividad-materia" required>
+                  <option value="">Seleccionar Materia...</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="actividad-trimestre">Trimestre *</label>
+                <select id="actividad-trimestre" required>
+                  <option value="">Seleccionar...</option>
+                  <option value="1er Trimestre">1er Trimestre</option>
+                  <option value="2do Trimestre">2do Trimestre</option>
+                  <option value="3er Trimestre">3er Trimestre</option>
+                </select>
               </div>
               <div class="form-group">
                 <label for="actividad-fecha-entrega">Fecha de Entrega *</label>
@@ -822,7 +775,6 @@
       </main>
     </div>
   </div>
-
   <!-- Delete Modal -->
   <div id="delete-modal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 1rem;">
     <div class="modal-content" style="background: #E6E6E6; border-radius: 12px; padding: 2rem; max-width: 500px; width: 100%;">
@@ -836,16 +788,13 @@
       </div>
     </div>
   </div>
-
   <!-- PDF Preview -->
   <div id="pdf-preview">
     <button class="close-pdf" id="close-pdf">✕ Cerrar</button>
     <div id="pdf-content" class="pdf-document"></div>
   </div>
-
   <!-- Toast -->
   <div id="toast" class="toast"><span id="toast-message"></span></div>
-
   <script>
     // ======================
     // CONFIGURACIÓN INICIAL
@@ -854,10 +803,10 @@
       institucion_nombre: "Institución Educativa",
       year_academico: "2024"
     };
-
     let currentUser = null;
     let planificacionToDelete = null;
     let isLoading = false;
+    let currentBachillerato = null;
 
     // Cargar datos desde localStorage
     let planificaciones = JSON.parse(localStorage.getItem('planificaciones')) || [];
@@ -870,6 +819,55 @@
     }
 
     // ======================
+    // MATERIAS POR MODALIDAD
+    // ======================
+    const MATERIAS = {
+      tecnico: [
+        "Lengua y Literatura",
+        "Matemática",
+        "Educación Cultural y Artística",
+        "Educación Física",
+        "Lengua Extranjera",
+        "Física",
+        "Química",
+        "Biología",
+        "Historia",
+        "Emprendimiento y Gestión",
+        "Investigación Científica",
+        "Filosofía",
+        "Educación para la Ciudadanía",
+        "Programación y Base de Datos",
+        "Sistemas Operativos y Redes",
+        "Soporte Técnico y Electrónica",
+        "Enseñanza Religiosa Escolar",
+        "Robótica",
+        "Acompañamiento Integral en el Aprendizaje",
+        "Participación Estudiantil",
+        "Aplicaciones Ofimáticas Locales y en Línea"
+      ],
+      ciencias: [
+        "Lengua y Literatura",
+        "Matemática",
+        "Educación Cultural y Artística",
+        "Educación Física",
+        "Lengua Extranjera",
+        "Física",
+        "Química",
+        "Biología",
+        "Historia",
+        "Emprendimiento y Gestión",
+        "Investigación Científica",
+        "Filosofía",
+        "Educación para la Ciudadanía",
+        "Enseñanza Religiosa Escolar",
+        "Robótica",
+        "Acompañamiento Integral en el Aprendizaje",
+        "Participación Estudiantil",
+        "Computación"
+      ]
+    };
+
+    // ======================
     // UTILIDADES
     // ======================
     function showToast(message, isError = false) {
@@ -878,7 +876,6 @@
       toast.className = `toast${isError ? ' error' : ''} active`;
       setTimeout(() => toast.classList.remove('active'), 3000);
     }
-
     function formatDate(dateString) {
       const date = new Date(dateString);
       return date.toLocaleDateString('es-ES', {
@@ -887,15 +884,27 @@
         year: 'numeric'
       });
     }
-
     function truncateText(text, maxLength) {
       if (text.length <= maxLength) return text;
       return text.substring(0, maxLength) + '...';
     }
-
     function capitalizeFirst(str) {
       return str.charAt(0).toUpperCase() + str.slice(1);
     }
+
+    // ======================
+    // CAMBIO DE TIPO DE USUARIO
+    // ======================
+    document.getElementById('auth-usertype').addEventListener('change', function () {
+      const userType = this.value;
+      const bachField = document.getElementById('bachillerato-field');
+      if (userType === 'estudiante') {
+        bachField.style.display = 'block';
+      } else {
+        bachField.style.display = 'none';
+        document.getElementById('auth-bachillerato').value = '';
+      }
+    });
 
     // ======================
     // AUTENTICACIÓN
@@ -904,18 +913,47 @@
       e.preventDefault();
       const name = document.getElementById('auth-name').value.trim();
       const userType = document.getElementById('auth-usertype').value;
+      const bachillerato = document.getElementById('auth-bachillerato').value;
+
       if (!name || !userType) {
         showToast('Por favor complete todos los campos', true);
         return;
       }
+
+      if (userType === 'estudiante' && !bachillerato) {
+        showToast('Por favor seleccione la modalidad de bachillerato', true);
+        return;
+      }
+
       currentUser = { id: Date.now().toString(), nombre: name, tipo: userType };
+      currentBachillerato = userType === 'estudiante' ? bachillerato : null;
+
       document.getElementById('auth-screen').style.display = 'none';
+
       if (userType === 'profesor') {
         document.getElementById('teacher-dashboard').style.display = 'block';
         document.getElementById('user-name').textContent = name;
         document.getElementById('user-avatar').textContent = name.charAt(0).toUpperCase();
         renderPlanificaciones();
       } else {
+        // Inicializar materias en el formulario y en los filtros
+        const materiaSelect = document.getElementById('actividad-materia');
+        const filterMateriaSelect = document.getElementById('filter-materia');
+        materiaSelect.innerHTML = '<option value="">Seleccionar Materia...</option>';
+        filterMateriaSelect.innerHTML = '<option value="todas">Todas las materias</option>';
+        
+        MATERIAS[bachillerato].forEach(materia => {
+          const option1 = document.createElement('option');
+          option1.value = materia;
+          option1.textContent = materia;
+          materiaSelect.appendChild(option1);
+
+          const option2 = document.createElement('option');
+          option2.value = materia;
+          option2.textContent = materia;
+          filterMateriaSelect.appendChild(option2);
+        });
+
         document.getElementById('student-dashboard').style.display = 'block';
         document.getElementById('student-user-name').textContent = name;
         document.getElementById('student-user-avatar').textContent = name.charAt(0).toUpperCase();
@@ -927,10 +965,12 @@
 
     function handleLogout() {
       currentUser = null;
+      currentBachillerato = null;
       document.getElementById('teacher-dashboard').style.display = 'none';
       document.getElementById('student-dashboard').style.display = 'none';
       document.getElementById('auth-screen').style.display = 'flex';
       document.getElementById('auth-form').reset();
+      document.getElementById('bachillerato-field').style.display = 'none';
       showToast('Sesión cerrada exitosamente');
     }
 
@@ -946,13 +986,11 @@
       const today = new Date().toISOString().split('T')[0];
       document.getElementById('fecha').value = today;
     });
-
     document.getElementById('btn-cancelar').addEventListener('click', () => {
       document.getElementById('form-section').style.display = 'none';
       document.getElementById('list-section').style.display = 'block';
       document.getElementById('planificacion-form').reset();
     });
-
     document.getElementById('planificacion-form').addEventListener('submit', function(e) {
       e.preventDefault();
       if (isLoading) return;
@@ -1042,13 +1080,11 @@
       const today = new Date().toISOString().split('T')[0];
       document.getElementById('actividad-fecha-entrega').value = today;
     });
-
     document.getElementById('btn-cancelar-actividad').addEventListener('click', () => {
       document.getElementById('student-form-section').style.display = 'none';
       document.getElementById('student-list-section').style.display = 'block';
       document.getElementById('actividad-form').reset();
     });
-
     document.getElementById('actividad-form').addEventListener('submit', function(e) {
       e.preventDefault();
       if (isLoading) return;
@@ -1057,6 +1093,7 @@
         titulo: document.getElementById('actividad-titulo').value,
         categoria: document.getElementById('actividad-categoria').value,
         materia: document.getElementById('actividad-materia').value,
+        trimestre: document.getElementById('actividad-trimestre').value,
         fecha_entrega: document.getElementById('actividad-fecha-entrega').value,
         prioridad: document.getElementById('actividad-prioridad').value,
         descripcion: document.getElementById('actividad-descripcion').value,
@@ -1073,20 +1110,36 @@
       updateStudentStats();
     });
 
+    // Filtros interactivos
+    document.getElementById('filter-materia').addEventListener('change', renderActividades);
+    document.getElementById('filter-trimestre').addEventListener('change', renderActividades);
     document.getElementById('filter-categoria').addEventListener('change', renderActividades);
     document.getElementById('filter-estado').addEventListener('change', renderActividades);
 
     function renderActividades() {
       const container = document.getElementById('actividades-container');
+      
+      let filtered = [...actividades];
+      
+      // Filtros
+      const filterMateria = document.getElementById('filter-materia').value;
+      const filterTrimestre = document.getElementById('filter-trimestre').value;
       const filterCategoria = document.getElementById('filter-categoria').value;
       const filterEstado = document.getElementById('filter-estado').value;
-      let filtered = actividades;
+
+      if (filterMateria !== 'todas') {
+        filtered = filtered.filter(a => a.materia === filterMateria);
+      }
+      if (filterTrimestre !== 'todos') {
+        filtered = filtered.filter(a => a.trimestre === filterTrimestre);
+      }
       if (filterCategoria !== 'todos') {
         filtered = filtered.filter(a => a.categoria === filterCategoria);
       }
       if (filterEstado !== 'todos') {
         filtered = filtered.filter(a => a.estado === filterEstado);
       }
+
       if (filtered.length === 0) {
         container.innerHTML = `
           <div class="empty-state">
@@ -1097,6 +1150,7 @@
         `;
         return;
       }
+
       container.innerHTML = filtered.map(act => {
         const isCompleted = act.estado === 'completada';
         return `
@@ -1112,6 +1166,7 @@
               <span>📚 ${act.materia}</span>
               <span>📂 ${capitalizeFirst(act.categoria)}</span>
               <span>📅 ${formatDate(act.fecha_entrega)}</span>
+              <span>📝 ${act.trimestre}</span>
             </div>
             <div class="activity-actions">
               <button class="btn-complete ${isCompleted ? 'completed' : ''}" onclick="toggleActivityStatus('${act.id}')">
@@ -1145,22 +1200,18 @@
       updateStudentStats();
       showToast(actividad.estado === 'completada' ? '¡Actividad completada!' : 'Actividad marcada como pendiente');
     };
-
     window.deleteActividad = function(id) {
       planificacionToDelete = { id, type: 'actividad' };
       document.getElementById('delete-modal').style.display = 'flex';
     };
-
     window.deletePlanificacion = function(id) {
       planificacionToDelete = { id, type: 'planificacion' };
       document.getElementById('delete-modal').style.display = 'flex';
     };
-
     document.getElementById('modal-cancel').addEventListener('click', () => {
       document.getElementById('delete-modal').style.display = 'none';
       planificacionToDelete = null;
     });
-
     document.getElementById('modal-confirm').addEventListener('click', () => {
       if (!planificacionToDelete) return;
       if (planificacionToDelete.type === 'actividad') {
@@ -1185,10 +1236,8 @@
     window.viewPlanificacion = function(id) {
       const plan = planificaciones.find(p => p.id === id);
       if (!plan) return;
-      
       const institucion = defaultConfig.institucion_nombre;
       const year = defaultConfig.year_academico;
-      
       const pdfContent = `
         <div class="pdf-header">
           <h1 class="pdf-institution">${institucion}</h1>
@@ -1210,7 +1259,7 @@
               <span class="pdf-value">${plan.curso}</span>
             </div>
             <div class="pdf-info-item">
-              <span class="pdf-label">Período:</span>
+              <span class="pdf-label">Período Lectivo:</span>
               <span class="pdf-value">${plan.periodo}</span>
             </div>
             <div class="pdf-info-item">
@@ -1236,11 +1285,9 @@
           Generado el ${formatDate(new Date().toISOString())}
         </div>
       `;
-      
       document.getElementById('pdf-content').innerHTML = pdfContent;
       document.getElementById('pdf-preview').style.display = 'block';
     };
-
     document.getElementById('close-pdf').addEventListener('click', () => {
       document.getElementById('pdf-preview').style.display = 'none';
     });
@@ -1248,10 +1295,5 @@
     // ======================
     // INICIALIZAR
     // ======================
-    // Establecer fechas actuales
     const today = new Date().toISOString().split('T')[0];
-    if (document.getElementById('fecha')) document.getElementById('fecha').value = today;
-    if (document.getElementById('actividad-fecha-entrega')) document.getElementById('actividad-fecha-entrega').value = today;
-  </script>
-</body>
-</html>
+    if (document.getElementById('fecha')) document.getElementById('fecha').v... (Tiempo restante: 1 KB)
