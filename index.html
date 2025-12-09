@@ -1,0 +1,1256 @@
+<!doctype html>
+<html lang="es">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema Educativo Integral</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    :root {
+      --bg-primary: #0F0F11;
+      --bg-secondary: #355C7D;
+      --bg-accent: #6C5B7B;
+      --surface: #E6E6E6;
+      --text-primary: #1e293b;
+      --text-muted: #64748b;
+      --btn-primary: #6C5B7B;
+      --btn-primary-hover: #8B7A9B;
+      --btn-secondary: #355C7D;
+      --btn-secondary-hover: #4A718F;
+      --danger: #ef4444;
+      --border-color: #C06C84;
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-accent) 100%);
+      min-height: 100vh;
+      color: var(--text-primary);
+    }
+
+    .auth-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-container::before,
+    .auth-container::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    }
+
+    .auth-container::before {
+      width: 500px;
+      height: 500px;
+      top: -200px;
+      left: -200px;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .auth-container::after {
+      width: 400px;
+      height: 400px;
+      bottom: -150px;
+      right: -150px;
+      animation: float 8s ease-in-out infinite reverse;
+      opacity: 0.8;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-20px) translateX(20px); }
+    }
+
+    .auth-box {
+      background: rgba(230, 230, 230, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 3rem 2.5rem;
+      border-radius: 24px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(192, 108, 132, 0.3);
+      max-width: 450px;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+      border: 1px solid rgba(192, 108, 132, 0.5);
+      text-align: center;
+    }
+
+    .auth-logo {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      animation: bounce 2s infinite;
+      display: inline-block;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .auth-title {
+      font-size: 2rem;
+      background: linear-gradient(135deg, var(--btn-primary), #C06C84);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 0 0 0.5rem 0;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .auth-subtitle {
+      color: #6b7280;
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .input-group {
+      margin-bottom: 1.25rem;
+      text-align: left;
+    }
+
+    .input-group label {
+      display: block;
+      font-weight: 600;
+      color: #4b5563;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .input-group input,
+    .input-group select {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      background: white;
+      transition: all 0.3s ease;
+    }
+
+    .input-group input:focus,
+    .input-group select:focus {
+      outline: none;
+      border-color: var(--btn-primary);
+      box-shadow: 0 0 0 3px rgba(108, 91, 123, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--btn-primary), var(--btn-primary-hover));
+      color: var(--surface);
+      box-shadow: 0 4px 12px rgba(108, 91, 123, 0.3);
+      width: 100%;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, var(--btn-primary-hover), #AA99BB);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(108, 91, 123, 0.5);
+    }
+
+    .main-wrapper {
+      display: none;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    header {
+      background: var(--surface);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    h1 {
+      background: linear-gradient(135deg, var(--btn-primary), #C06C84);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 0 0 0.5rem;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .action-bar {
+      background: var(--surface);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      margin-bottom: 2rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      margin-left: auto;
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--btn-primary), var(--btn-primary-hover));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--surface);
+      font-weight: 700;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 8px rgba(108, 91, 123, 0.4);
+    }
+
+    .btn-logout {
+      background: var(--danger);
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn-logout:hover {
+      background: #dc2626;
+    }
+
+    .content-area {
+      background: var(--surface);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    input, select, textarea {
+      padding: 0.75rem;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      background: white;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--btn-primary);
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #94a3b8;
+    }
+
+    .empty-state-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .planificaciones-list,
+    .planner-grid {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    .planificacion-card,
+    .activity-card {
+      background: linear-gradient(135deg, var(--surface) 0%, #D6D6D6 100%);
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .planificacion-card:hover,
+    .activity-card:hover {
+      border-color: var(--btn-primary);
+      box-shadow: 0 8px 20px rgba(108, 91, 123, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .activity-card.completed {
+      opacity: 0.7;
+      background: #f1f5f9;
+    }
+
+    .card-header,
+    .activity-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 1rem;
+      gap: 1rem;
+    }
+
+    .card-title,
+    .activity-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 0.25rem 0;
+    }
+
+    .card-subtitle,
+    .activity-meta {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .card-actions,
+    .activity-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn-small {
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #dc2626;
+    }
+
+    .priority-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .priority-alta { background: #fee2e2; color: #991b1b; }
+    .priority-media { background: #fef3c7; color: #92400e; }
+    .priority-baja { background: #dbeafe; color: #1e40af; }
+
+    .btn-complete {
+      background: linear-gradient(135deg, #C7C7FF 0%, #A7A7E6 100%);
+      color: #2c3e50;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 6px rgba(199, 199, 255, 0.2);
+    }
+
+    .btn-complete.completed {
+      background: #94a3b8;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 2px solid #DDE1E7;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #5B8DBE 0%, #7B9FD3 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 0;
+    }
+
+    .stat-label {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin: 0.5rem 0 0 0;
+    }
+
+    #pdf-preview {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      z-index: 3000;
+      padding: 2rem;
+      overflow: auto;
+    }
+
+    .pdf-document {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 3rem;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .pdf-header {
+      text-align: center;
+      border-bottom: 3px solid #667eea;
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .pdf-institution {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 0.5rem 0;
+    }
+
+    .pdf-title {
+      font-size: 1.2rem;
+      color: #667eea;
+      margin: 0;
+    }
+
+    .pdf-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .pdf-section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 0.75rem 0;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .pdf-info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .pdf-info-item {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .pdf-label {
+      font-weight: 600;
+      color: #475569;
+    }
+
+    .pdf-value {
+      color: var(--text-muted);
+    }
+
+    .pdf-text-block {
+      color: #475569;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    .pdf-footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 2px solid #e2e8f0;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 0.85rem;
+    }
+
+    .close-pdf {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 3001;
+      background: var(--btn-primary);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: linear-gradient(135deg, var(--btn-primary), var(--btn-primary-hover));
+      color: var(--surface);
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(108, 91, 123, 0.5);
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+      z-index: 2000;
+      animation: slideIn 0.3s ease;
+      font-weight: 600;
+    }
+
+    .toast.active {
+      display: flex;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(400px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .action-bar { flex-direction: column; }
+      .user-info { margin-left: 0; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Login Screen -->
+  <div id="auth-screen" class="auth-container">
+    <div class="auth-box">
+      <div class="auth-logo">🎓</div>
+      <h1 class="auth-title">Iniciar Sesión</h1>
+      <p class="auth-subtitle">Accede a tu cuenta educativa</p>
+      <form id="auth-form">
+        <div class="input-group">
+          <label for="auth-name">Nombre Completo</label>
+          <input type="text" id="auth-name" placeholder="Tu nombre completo" required />
+        </div>
+        <div class="input-group">
+          <label for="auth-usertype">Tipo de Usuario</label>
+          <select id="auth-usertype" required>
+            <option value="">Seleccionar...</option>
+            <option value="estudiante">Estudiante</option>
+            <option value="profesor">Profesor</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Ingresar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Teacher Dashboard -->
+  <div id="teacher-dashboard" class="main-wrapper">
+    <div class="main-container">
+      <header>
+        <h1>Sistema de Planificación Docente</h1>
+        <p class="subtitle">Gestión completa de planificaciones y reportes institucionales</p>
+      </header>
+      <div class="action-bar">
+        <button class="btn btn-primary" id="btn-nueva-planificacion">➕ Nueva Planificación</button>
+        <div class="user-info">
+          <div class="user-avatar" id="user-avatar">P</div>
+          <div>
+            <div class="user-name" id="user-name">Profesor</div>
+            <div class="user-role">Profesor</div>
+          </div>
+          <button class="btn-logout" id="btn-logout-teacher">Cerrar Sesión</button>
+        </div>
+        <div class="filter-section">
+          <label for="filter-tipo" style="margin: 0;">Filtrar por:</label>
+          <select id="filter-tipo" class="filter-select">
+            <option value="todos">Todos los tipos</option>
+            <option value="semanal">Semanal</option>
+            <option value="mensual">Mensual</option>
+            <option value="trimestral">Trimestral</option>
+            <option value="anual">Anual</option>
+          </select>
+        </div>
+      </div>
+      <main class="content-area">
+        <div id="form-section" style="display: none;">
+          <h2 style="margin-top: 0; color: var(--text-primary);">Nueva Planificación</h2>
+          <form id="planificacion-form">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="tipo">Tipo de Planificación *</label>
+                <select id="tipo" required>
+                  <option value="">Seleccionar...</option>
+                  <option value="semanal">Semanal</option>
+                  <option value="mensual">Mensual</option>
+                  <option value="trimestral">Trimestral</option>
+                  <option value="anual">Anual</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="nombre-docente">Nombre del Docente *</label>
+                <input type="text" id="nombre-docente" placeholder="Ej: Prof. María García" required />
+              </div>
+              <div class="form-group">
+                <label for="materia">Materia *</label>
+                <input type="text" id="materia" placeholder="Ej: Matemáticas" required />
+              </div>
+              <div class="form-group">
+                <label for="curso">Curso *</label>
+                <input type="text" id="curso" placeholder="Ej: 3° A" required />
+              </div>
+              <div class="form-group">
+                <label for="periodo">Período *</label>
+                <input type="text" id="periodo" placeholder="Ej: 1er Trimestre 2024" required />
+              </div>
+              <div class="form-group">
+                <label for="fecha">Fecha *</label>
+                <input type="date" id="fecha" required />
+              </div>
+              <div class="form-group full-width">
+                <label for="contenido">Contenido *</label>
+                <textarea id="contenido" placeholder="Describa los contenidos a desarrollar..." required></textarea>
+              </div>
+              <div class="form-group full-width">
+                <label for="objetivos">Objetivos *</label>
+                <textarea id="objetivos" placeholder="Objetivos de aprendizaje..." required></textarea>
+              </div>
+              <div class="form-group full-width">
+                <label for="metodologia">Metodología</label>
+                <textarea id="metodologia" placeholder="Estrategias y metodología de enseñanza..."></textarea>
+              </div>
+              <div class="form-group full-width">
+                <label for="recursos">Recursos Didácticos</label>
+                <textarea id="recursos" placeholder="Materiales y recursos a utilizar..."></textarea>
+              </div>
+              <div class="form-group full-width">
+                <label for="evaluacion">Criterios de Evaluación</label>
+                <textarea id="evaluacion" placeholder="Criterios e instrumentos de evaluación..."></textarea>
+              </div>
+              <div class="form-group full-width">
+                <label for="observaciones">Observaciones</label>
+                <textarea id="observaciones" placeholder="Observaciones adicionales..."></textarea>
+              </div>
+            </div>
+            <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+              <button type="button" class="btn btn-outline" id="btn-cancelar" style="background:white; border:2px solid #e2e8f0;">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Guardar Planificación</button>
+            </div>
+          </form>
+        </div>
+        <div id="list-section">
+          <h2 style="margin-top: 0; color: var(--text-primary);">Planificaciones Registradas</h2>
+          <div id="planificaciones-container" class="planificaciones-list"></div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Student Dashboard -->
+  <div id="student-dashboard" class="main-wrapper">
+    <div class="main-container">
+      <header style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <h1>📚 Mi Planner Escolar</h1>
+          <p class="subtitle">Organiza tus actividades y tareas</p>
+        </div>
+        <div class="user-info">
+          <div class="user-avatar" id="student-user-avatar">E</div>
+          <div>
+            <div class="user-name" id="student-user-name">Estudiante</div>
+            <div class="user-role">Estudiante</div>
+          </div>
+          <button class="btn-logout" id="btn-logout-student">Cerrar Sesión</button>
+        </div>
+      </header>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <p class="stat-number" id="total-activities">0</p>
+          <p class="stat-label">Total de Actividades</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-number" id="pending-activities">0</p>
+          <p class="stat-label">Pendientes</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-number" id="completed-activities">0</p>
+          <p class="stat-label">Completadas</p>
+        </div>
+      </div>
+      <div class="action-bar">
+        <button class="btn btn-primary" id="btn-nueva-actividad">➕ Nueva Actividad</button>
+        <div class="filter-section">
+          <label for="filter-categoria" style="margin: 0;">Filtrar:</label>
+          <select id="filter-categoria" class="filter-select">
+            <option value="todos">Todas las categorías</option>
+            <option value="tarea">Tareas</option>
+            <option value="examen">Exámenes</option>
+            <option value="proyecto">Proyectos</option>
+            <option value="lectura">Lecturas</option>
+            <option value="otro">Otros</option>
+          </select>
+          <select id="filter-estado" class="filter-select">
+            <option value="todos">Todos los estados</option>
+            <option value="pendiente">Pendiente</option>
+            <option value="completada">Completada</option>
+          </select>
+        </div>
+      </div>
+      <main class="content-area">
+        <div id="student-form-section" style="display: none;">
+          <h2 style="margin-top: 0; color: var(--text-primary);">Nueva Actividad Escolar</h2>
+          <form id="actividad-form">
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label for="actividad-titulo">Título de la Actividad *</label>
+                <input type="text" id="actividad-titulo" placeholder="Ej: Ensayo de Historia" required />
+              </div>
+              <div class="form-group">
+                <label for="actividad-categoria">Categoría *</label>
+                <select id="actividad-categoria" required>
+                  <option value="">Seleccionar...</option>
+                  <option value="tarea">Tarea</option>
+                  <option value="examen">Examen</option>
+                  <option value="proyecto">Proyecto</option>
+                  <option value="lectura">Lectura</option>
+                  <option value="otro">Otro</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="actividad-materia">Materia *</label>
+                <input type="text" id="actividad-materia" placeholder="Ej: Historia" required />
+              </div>
+              <div class="form-group">
+                <label for="actividad-fecha-entrega">Fecha de Entrega *</label>
+                <input type="date" id="actividad-fecha-entrega" required />
+              </div>
+              <div class="form-group">
+                <label for="actividad-prioridad">Prioridad *</label>
+                <select id="actividad-prioridad" required>
+                  <option value="">Seleccionar...</option>
+                  <option value="alta">Alta</option>
+                  <option value="media">Media</option>
+                  <option value="baja">Baja</option>
+                </select>
+              </div>
+              <div class="form-group full-width">
+                <label for="actividad-descripcion">Descripción *</label>
+                <textarea id="actividad-descripcion" placeholder="Describe la actividad en detalle..." required></textarea>
+              </div>
+            </div>
+            <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+              <button type="button" class="btn btn-outline" id="btn-cancelar-actividad" style="background:white; border:2px solid #e2e8f0;">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Guardar Actividad</button>
+            </div>
+          </form>
+        </div>
+        <div id="student-list-section">
+          <h2 style="margin-top: 0; color: var(--text-primary);">Mis Actividades</h2>
+          <div id="actividades-container" class="planner-grid"></div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Delete Modal -->
+  <div id="delete-modal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 1rem;">
+    <div class="modal-content" style="background: #E6E6E6; border-radius: 12px; padding: 2rem; max-width: 500px; width: 100%;">
+      <div class="modal-header">
+        <h3 class="modal-title">Confirmar Eliminación</h3>
+      </div>
+      <p>¿Está seguro que desea eliminar este registro? Esta acción no se puede deshacer.</p>
+      <div class="modal-actions" style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem;">
+        <button class="btn btn-outline" id="modal-cancel" style="background: white; color: #64748b; border: 2px solid #e2e8f0;">Cancelar</button>
+        <button class="btn btn-danger" id="modal-confirm">Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PDF Preview -->
+  <div id="pdf-preview">
+    <button class="close-pdf" id="close-pdf">✕ Cerrar</button>
+    <div id="pdf-content" class="pdf-document"></div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast"><span id="toast-message"></span></div>
+
+  <script>
+    // ======================
+    // CONFIGURACIÓN INICIAL
+    // ======================
+    const defaultConfig = {
+      institucion_nombre: "Institución Educativa",
+      year_academico: "2024"
+    };
+
+    let currentUser = null;
+    let planificacionToDelete = null;
+    let isLoading = false;
+
+    // Cargar datos desde localStorage
+    let planificaciones = JSON.parse(localStorage.getItem('planificaciones')) || [];
+    let actividades = JSON.parse(localStorage.getItem('actividades')) || [];
+
+    // Guardar datos en localStorage
+    function saveData() {
+      localStorage.setItem('planificaciones', JSON.stringify(planificaciones));
+      localStorage.setItem('actividades', JSON.stringify(actividades));
+    }
+
+    // ======================
+    // UTILIDADES
+    // ======================
+    function showToast(message, isError = false) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-message').textContent = message;
+      toast.className = `toast${isError ? ' error' : ''} active`;
+      setTimeout(() => toast.classList.remove('active'), 3000);
+    }
+
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+      });
+    }
+
+    function truncateText(text, maxLength) {
+      if (text.length <= maxLength) return text;
+      return text.substring(0, maxLength) + '...';
+    }
+
+    function capitalizeFirst(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    // ======================
+    // AUTENTICACIÓN
+    // ======================
+    document.getElementById('auth-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('auth-name').value.trim();
+      const userType = document.getElementById('auth-usertype').value;
+      if (!name || !userType) {
+        showToast('Por favor complete todos los campos', true);
+        return;
+      }
+      currentUser = { id: Date.now().toString(), nombre: name, tipo: userType };
+      document.getElementById('auth-screen').style.display = 'none';
+      if (userType === 'profesor') {
+        document.getElementById('teacher-dashboard').style.display = 'block';
+        document.getElementById('user-name').textContent = name;
+        document.getElementById('user-avatar').textContent = name.charAt(0).toUpperCase();
+        renderPlanificaciones();
+      } else {
+        document.getElementById('student-dashboard').style.display = 'block';
+        document.getElementById('student-user-name').textContent = name;
+        document.getElementById('student-user-avatar').textContent = name.charAt(0).toUpperCase();
+        renderActividades();
+        updateStudentStats();
+      }
+      showToast(`¡Bienvenido, ${name}!`);
+    });
+
+    function handleLogout() {
+      currentUser = null;
+      document.getElementById('teacher-dashboard').style.display = 'none';
+      document.getElementById('student-dashboard').style.display = 'none';
+      document.getElementById('auth-screen').style.display = 'flex';
+      document.getElementById('auth-form').reset();
+      showToast('Sesión cerrada exitosamente');
+    }
+
+    document.getElementById('btn-logout-teacher').addEventListener('click', handleLogout);
+    document.getElementById('btn-logout-student').addEventListener('click', handleLogout);
+
+    // ======================
+    // PROFESOR: PLANIFICACIONES
+    // ======================
+    document.getElementById('btn-nueva-planificacion').addEventListener('click', () => {
+      document.getElementById('form-section').style.display = 'block';
+      document.getElementById('list-section').style.display = 'none';
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('fecha').value = today;
+    });
+
+    document.getElementById('btn-cancelar').addEventListener('click', () => {
+      document.getElementById('form-section').style.display = 'none';
+      document.getElementById('list-section').style.display = 'block';
+      document.getElementById('planificacion-form').reset();
+    });
+
+    document.getElementById('planificacion-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (isLoading) return;
+      const formData = {
+        id: Date.now().toString(),
+        tipo: document.getElementById('tipo').value,
+        nombre_docente: document.getElementById('nombre-docente').value,
+        materia: document.getElementById('materia').value,
+        curso: document.getElementById('curso').value,
+        periodo: document.getElementById('periodo').value,
+        fecha: document.getElementById('fecha').value,
+        contenido: document.getElementById('contenido').value,
+        objetivos: document.getElementById('objetivos').value,
+        metodologia: document.getElementById('metodologia').value || '',
+        recursos: document.getElementById('recursos').value || '',
+        evaluacion: document.getElementById('evaluacion').value || '',
+        observaciones: document.getElementById('observaciones').value || '',
+        created_at: new Date().toISOString()
+      };
+      planificaciones.push(formData);
+      saveData();
+      showToast('Planificación guardada exitosamente');
+      document.getElementById('planificacion-form').reset();
+      document.getElementById('form-section').style.display = 'none';
+      document.getElementById('list-section').style.display = 'block';
+      renderPlanificaciones();
+    });
+
+    function renderPlanificaciones() {
+      const container = document.getElementById('planificaciones-container');
+      const filter = document.getElementById('filter-tipo').value;
+      let filtered = planificaciones;
+      if (filter !== 'todos') {
+        filtered = planificaciones.filter(p => p.tipo === filter);
+      }
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">📋</div>
+            <h3>No hay planificaciones registradas</h3>
+            <p>Comience creando su primera planificación docente</p>
+          </div>
+        `;
+        return;
+      }
+      container.innerHTML = filtered.map(plan => `
+        <div class="planificacion-card">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">${plan.materia} - ${plan.curso}</h3>
+              <p class="card-subtitle">${plan.nombre_docente} • ${formatDate(plan.fecha)}</p>
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-secondary btn-small" onclick="viewPlanificacion('${plan.id}')">👁️ Ver</button>
+              <button class="btn btn-danger btn-small" onclick="deletePlanificacion('${plan.id}')">🗑️</button>
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="info-row">
+              <span class="badge ${getBadgeClass(plan.tipo)}">${capitalizeFirst(plan.tipo)}</span>
+              <span class="badge badge-blue">${plan.periodo}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Contenido:</span>
+              <span class="info-value">${truncateText(plan.contenido, 100)}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Objetivos:</span>
+              <span class="info-value">${truncateText(plan.objetivos, 100)}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function getBadgeClass(tipo) {
+      const classes = { 'semanal': 'badge-blue', 'mensual': 'badge-green', 'trimestral': 'badge-purple', 'anual': 'badge-blue' };
+      return classes[tipo] || 'badge-blue';
+    }
+
+    // ======================
+    // ESTUDIANTE: ACTIVIDADES
+    // ======================
+    document.getElementById('btn-nueva-actividad').addEventListener('click', () => {
+      document.getElementById('student-form-section').style.display = 'block';
+      document.getElementById('student-list-section').style.display = 'none';
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('actividad-fecha-entrega').value = today;
+    });
+
+    document.getElementById('btn-cancelar-actividad').addEventListener('click', () => {
+      document.getElementById('student-form-section').style.display = 'none';
+      document.getElementById('student-list-section').style.display = 'block';
+      document.getElementById('actividad-form').reset();
+    });
+
+    document.getElementById('actividad-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (isLoading) return;
+      const formData = {
+        id: Date.now().toString(),
+        titulo: document.getElementById('actividad-titulo').value,
+        categoria: document.getElementById('actividad-categoria').value,
+        materia: document.getElementById('actividad-materia').value,
+        fecha_entrega: document.getElementById('actividad-fecha-entrega').value,
+        prioridad: document.getElementById('actividad-prioridad').value,
+        descripcion: document.getElementById('actividad-descripcion').value,
+        estado: 'pendiente',
+        created_at: new Date().toISOString()
+      };
+      actividades.push(formData);
+      saveData();
+      showToast('Actividad guardada exitosamente');
+      document.getElementById('actividad-form').reset();
+      document.getElementById('student-form-section').style.display = 'none';
+      document.getElementById('student-list-section').style.display = 'block';
+      renderActividades();
+      updateStudentStats();
+    });
+
+    document.getElementById('filter-categoria').addEventListener('change', renderActividades);
+    document.getElementById('filter-estado').addEventListener('change', renderActividades);
+
+    function renderActividades() {
+      const container = document.getElementById('actividades-container');
+      const filterCategoria = document.getElementById('filter-categoria').value;
+      const filterEstado = document.getElementById('filter-estado').value;
+      let filtered = actividades;
+      if (filterCategoria !== 'todos') {
+        filtered = filtered.filter(a => a.categoria === filterCategoria);
+      }
+      if (filterEstado !== 'todos') {
+        filtered = filtered.filter(a => a.estado === filterEstado);
+      }
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">📝</div>
+            <h3>No hay actividades registradas</h3>
+            <p>Comienza agregando tu primera actividad escolar</p>
+          </div>
+        `;
+        return;
+      }
+      container.innerHTML = filtered.map(act => {
+        const isCompleted = act.estado === 'completada';
+        return `
+          <div class="activity-card ${isCompleted ? 'completed' : ''}">
+            <div class="activity-header">
+              <div style="flex: 1;">
+                <h3 class="activity-title">${act.titulo}</h3>
+                <span class="priority-badge priority-${act.prioridad}">${act.prioridad}</span>
+              </div>
+            </div>
+            <p class="activity-description">${truncateText(act.descripcion, 100)}</p>
+            <div class="activity-meta">
+              <span>📚 ${act.materia}</span>
+              <span>📂 ${capitalizeFirst(act.categoria)}</span>
+              <span>📅 ${formatDate(act.fecha_entrega)}</span>
+            </div>
+            <div class="activity-actions">
+              <button class="btn-complete ${isCompleted ? 'completed' : ''}" onclick="toggleActivityStatus('${act.id}')">
+                ${isCompleted ? '✓ Completada' : 'Marcar Completada'}
+              </button>
+              <button class="btn btn-danger btn-small" onclick="deleteActividad('${act.id}')">🗑️</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function updateStudentStats() {
+      const total = actividades.length;
+      const completed = actividades.filter(a => a.estado === 'completada').length;
+      const pending = total - completed;
+      document.getElementById('total-activities').textContent = total;
+      document.getElementById('completed-activities').textContent = completed;
+      document.getElementById('pending-activities').textContent = pending;
+    }
+
+    // ======================
+    // FUNCIONES GLOBALES
+    // ======================
+    window.toggleActivityStatus = function(id) {
+      const actividad = actividades.find(a => a.id === id);
+      if (!actividad) return;
+      actividad.estado = actividad.estado === 'completada' ? 'pendiente' : 'completada';
+      saveData();
+      renderActividades();
+      updateStudentStats();
+      showToast(actividad.estado === 'completada' ? '¡Actividad completada!' : 'Actividad marcada como pendiente');
+    };
+
+    window.deleteActividad = function(id) {
+      planificacionToDelete = { id, type: 'actividad' };
+      document.getElementById('delete-modal').style.display = 'flex';
+    };
+
+    window.deletePlanificacion = function(id) {
+      planificacionToDelete = { id, type: 'planificacion' };
+      document.getElementById('delete-modal').style.display = 'flex';
+    };
+
+    document.getElementById('modal-cancel').addEventListener('click', () => {
+      document.getElementById('delete-modal').style.display = 'none';
+      planificacionToDelete = null;
+    });
+
+    document.getElementById('modal-confirm').addEventListener('click', () => {
+      if (!planificacionToDelete) return;
+      if (planificacionToDelete.type === 'actividad') {
+        actividades = actividades.filter(a => a.id !== planificacionToDelete.id);
+        saveData();
+        renderActividades();
+        updateStudentStats();
+        showToast('Actividad eliminada exitosamente');
+      } else {
+        planificaciones = planificaciones.filter(p => p.id !== planificacionToDelete.id);
+        saveData();
+        renderPlanificaciones();
+        showToast('Planificación eliminada exitosamente');
+      }
+      document.getElementById('delete-modal').style.display = 'none';
+      planificacionToDelete = null;
+    });
+
+    // ======================
+    // PDF
+    // ======================
+    window.viewPlanificacion = function(id) {
+      const plan = planificaciones.find(p => p.id === id);
+      if (!plan) return;
+      
+      const institucion = defaultConfig.institucion_nombre;
+      const year = defaultConfig.year_academico;
+      
+      const pdfContent = `
+        <div class="pdf-header">
+          <h1 class="pdf-institution">${institucion}</h1>
+          <p class="pdf-title">Planificación ${capitalizeFirst(plan.tipo)} - ${year}</p>
+        </div>
+        <div class="pdf-section">
+          <h2 class="pdf-section-title">Información General</h2>
+          <div class="pdf-info-grid">
+            <div class="pdf-info-item">
+              <span class="pdf-label">Docente:</span>
+              <span class="pdf-value">${plan.nombre_docente}</span>
+            </div>
+            <div class="pdf-info-item">
+              <span class="pdf-label">Materia:</span>
+              <span class="pdf-value">${plan.materia}</span>
+            </div>
+            <div class="pdf-info-item">
+              <span class="pdf-label">Curso:</span>
+              <span class="pdf-value">${plan.curso}</span>
+            </div>
+            <div class="pdf-info-item">
+              <span class="pdf-label">Período:</span>
+              <span class="pdf-value">${plan.periodo}</span>
+            </div>
+            <div class="pdf-info-item">
+              <span class="pdf-label">Fecha:</span>
+              <span class="pdf-value">${formatDate(plan.fecha)}</span>
+            </div>
+            <div class="pdf-info-item">
+              <span class="pdf-label">Tipo:</span>
+              <span class="pdf-value">${capitalizeFirst(plan.tipo)}</span>
+            </div>
+          </div>
+        </div>
+        <div class="pdf-section">
+          <h2 class="pdf-section-title">Contenidos y Objetivos</h2>
+          <p class="pdf-text-block">${plan.contenido}</p>
+          <p class="pdf-text-block">${plan.objetivos}</p>
+        </div>
+        ${plan.metodologia ? `<div class="pdf-section"><h2 class="pdf-section-title">Metodología</h2><p class="pdf-text-block">${plan.metodologia}</p></div>` : ''}
+        ${plan.recursos ? `<div class="pdf-section"><h2 class="pdf-section-title">Recursos Didácticos</h2><p class="pdf-text-block">${plan.recursos}</p></div>` : ''}
+        ${plan.evaluacion ? `<div class="pdf-section"><h2 class="pdf-section-title">Criterios de Evaluación</h2><p class="pdf-text-block">${plan.evaluacion}</p></div>` : ''}
+        ${plan.observaciones ? `<div class="pdf-section"><h2 class="pdf-section-title">Observaciones</h2><p class="pdf-text-block">${plan.observaciones}</p></div>` : ''}
+        <div class="pdf-footer">
+          Generado el ${formatDate(new Date().toISOString())}
+        </div>
+      `;
+      
+      document.getElementById('pdf-content').innerHTML = pdfContent;
+      document.getElementById('pdf-preview').style.display = 'block';
+    };
+
+    document.getElementById('close-pdf').addEventListener('click', () => {
+      document.getElementById('pdf-preview').style.display = 'none';
+    });
+
+    // ======================
+    // INICIALIZAR
+    // ======================
+    // Establecer fechas actuales
+    const today = new Date().toISOString().split('T')[0];
+    if (document.getElementById('fecha')) document.getElementById('fecha').value = today;
+    if (document.getElementById('actividad-fecha-entrega')) document.getElementById('actividad-fecha-entrega').value = today;
+  </script>
+</body>
+</html>
