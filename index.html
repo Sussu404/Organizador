@@ -941,7 +941,7 @@
         const filterMateriaSelect = document.getElementById('filter-materia');
         materiaSelect.innerHTML = '<option value="">Seleccionar Materia...</option>';
         filterMateriaSelect.innerHTML = '<option value="todas">Todas las materias</option>';
-        
+       
         MATERIAS[bachillerato].forEach(materia => {
           const option1 = document.createElement('option');
           option1.value = materia;
@@ -1118,9 +1118,9 @@
 
     function renderActividades() {
       const container = document.getElementById('actividades-container');
-      
+     
       let filtered = [...actividades];
-      
+     
       // Filtros
       const filterMateria = document.getElementById('filter-materia').value;
       const filterTrimestre = document.getElementById('filter-trimestre').value;
@@ -1296,4 +1296,8 @@
     // INICIALIZAR
     // ======================
     const today = new Date().toISOString().split('T')[0];
-    if (document.getElementById('fecha')) document.getElementById('fecha').v... (Tiempo restante: 1 KB)
+    if (document.getElementById('fecha')) document.getElementById('fecha').value = today;
+    if (document.getElementById('actividad-fecha-entrega')) document.getElementById('actividad-fecha-entrega').value = today;
+  </script>
+</body>
+</html>
